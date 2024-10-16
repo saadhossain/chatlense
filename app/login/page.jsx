@@ -1,12 +1,27 @@
+'use client';
+import { signIn, useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 import { FaGoogle } from "react-icons/fa";
 
 const page = () => {
+    const { data: session } = useSession();
+    const handleGoogleSignIn = async () => {
+        await signIn("google");
+    };
+    useEffect(() => {
+        if (session) {
+            redirect('/');
+        }
+    }, [session]);
     return (
         <div className='flex items-center justify-center'>
             <div className="w-full max-w-md p-4 rounded-md shadow sm:p-8 bg-accent text-gray-100">
                 <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
                 <div className="my-6 space-y-2">
-                    <button aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-2 bg-secondary font-semibold rounded-md focus:outline-noe">
+                    <button
+                        onClick={() => handleGoogleSignIn()}
+                        aria-label="Login with Google" type="button" className="flex items-center justify-center w-full p-4 space-x-2 bg-secondary font-semibold rounded-md focus:outline-noe">
                         <FaGoogle />
                         <p>Login with Google</p>
                     </button>

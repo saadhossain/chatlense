@@ -9,8 +9,8 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt'
   },
   pages: {
-    signIn: '/',
-    newUser: '/',
+    signIn: '/login',
+    newUser: '/signup',
   },
   providers: [
     GoogleProvider({
@@ -19,14 +19,10 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, account }: { token: JWT; account: Account | null }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
+    async jwt({ token }: { token: JWT; account: Account | null }) {
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT }) {
-      session.accessToken = token.accessToken;
+    async session({ session }: { session: Session; token: JWT }) {
       return session;
     }
   },
