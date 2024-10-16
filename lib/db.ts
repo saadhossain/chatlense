@@ -1,0 +1,1 @@
+export const mongoUrl = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@chatlense.fyafd.mongodb.net/chatlense?retryWrites=true&w=majority&appName=chatlense`
